@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kozybayev University Admissions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00b0c7',
+                        'primary-dark': '#008fa3',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #007a8a 0%, #00b0c7 100%);
+        }
+        .news-card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+        .language-selector {
+            position: relative;
+            display: inline-block;
+        }
+        .language-dropdown {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 120px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            right: 0;
+            border-radius: 4px;
+        }
+        .language-selector:hover .language-dropdown {
+            display: block;
+        }
+        .language-flag {
+            width: 20px;
+            height: 15px;
+            margin-right: 8px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        [lang="kz"] {
+            display: none;
+        }
+        [lang="en"] {
+            display: none;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <!-- Top Bar -->
+    <div class="bg-primary-dark text-white py-2 px-4 text-sm">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center">
+                    <i class="fas fa-envelope mr-1"></i> mail@ku.edu.kz
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-phone mr-1"></i> +7 (7152) 49-30-27
+                </div>
+                <div class="flex items-center">
+                    <i class="fab fa-telegram mr-1"></i>
+                    <a href="https://t.me/kozybayevuniversity" target="_blank" class="hover:underline" data-i18n="news_channel">Новостной канал</a>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="https://ku.edu.kz" class="hover:underline" data-i18n="university_website">Сайт университета</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="bg-primary text-white p-3 rounded-lg mr-3">
+                    <i class="fas fa-university text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-primary-dark">KOZYBAYEV UNIVERSITY</h1>
+                    <p class="text-xs text-gray-600" data-i18n="university_name">Северо-Казахстанский университет имени Манаша Козыбаева</p>
+                </div>
+            </div>
+            
+            <nav class="hidden md:flex space-x-6">
+                <a href="#home" class="text-gray-800 hover:text-primary font-medium" data-i18n="home">Главная</a>
+                <a href="#arizona" class="text-gray-800 hover:text-primary font-medium">Arizona Diploma</a>
+                <a href="#itboost" class="text-gray-800 hover:text-primary font-medium">IT BOOST</a>
+                <a href="#admissions" class="text-gray-800 hover:text-primary font-medium" data-i18n="admissions">Приемная комиссия</a>
+                <a href="#contact" class="text-gray-800 hover:text-primary font-medium" data-i18n="contacts">Контакты</a>
+            </nav>
+            
+            <div class="language-selector ml-4">
+                <button class="flex items-center bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded" id="currentLanguage">
+                    <img src="https://flagcdn.com/w20/ru.png" class="language-flag" alt="Russian">
+                    <span data-i18n="language">Русский</span>
+                    <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                </button>
+                <div class="language-dropdown py-1">
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center" onclick="changeLanguage('ru')">
+                        <img src="https://flagcdn.com/w20/ru.png" class="language-flag" alt="Russian">
+                        <span data-i18n="russian">Русский</span>
+                    </a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center" onclick="changeLanguage('kz')">
+                        <img src="https://flagcdn.com/w20/kz.png" class="language-flag" alt="Kazakh">
+                        <span data-i18n="kazakh">Қазақша</span>
+                    </a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center" onclick="changeLanguage('en')">
+                        <img src="https://flagcdn.com/w20/gb.png" class="language-flag" alt="English">
+                        <span data-i18n="english">English</span>
+                    </a>
+                </div>
+            </div>
+            
+            <button class="md:hidden text-gray-800" id="mobileMenuButton">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-white py-2 px-4 shadow-md" id="mobileMenu">
+            <a href="#home" class="block py-2 text-gray-800 hover:text-primary" data-i18n="home">Главная</a>
+            <a href="#arizona" class="block py-2 text-gray-800 hover:text-primary">Arizona Diploma</a>
+            <a href="#itboost" class="block py-2 text-gray-800 hover:text-primary">IT BOOST</a>
+            <a href="#admissions" class="block py-2 text-gray-800 hover:text-primary" data-i18n="admissions">Приемная комиссия</a>
+            <a href="#contact" class="block py-2 text-gray-800 hover:text-primary" data-i18n="contacts">Контакты</a>
+            <div class="border-t mt-2 pt-2">
+                <div class="flex items-center py-2" onclick="toggleMobileLanguage()">
+                    <img src="https://flagcdn.com/w20/ru.png" class="language-flag" alt="Russian">
+                    <span class="mr-2" data-i18n="language">Русский</span>
+                    <i class="fas fa-chevron-down text-xs"></i>
+                </div>
+                <div class="pl-8 hidden" id="mobileLanguageMenu">
+                    <a href="#" class="block py-1 text-gray-800 hover:text-primary flex items-center" onclick="changeLanguage('ru')">
+                        <img src="https://flagcdn.com/w20/ru.png" class="language-flag" alt="Russian">
+                        <span data-i18n="russian">Русский</span>
+                    </a>
+                    <a href="#" class="block py-1 text-gray-800 hover:text-primary flex items-center" onclick="changeLanguage('kz')">
+                        <img src="https://flagcdn.com/w20/kz.png" class="language-flag" alt="Kazakh">
+                        <span data-i18n="kazakh">Қазақша</span>
+                    </a>
+                    <a href="#" class="block py-1 text-gray-800 hover:text-primary flex items-center" onclick="changeLanguage('en')">
+                        <img src="https://flagcdn.com/w20/gb.png" class="language-flag" alt="English">
+                        <span data-i18n="english">English</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+   <!-- Hero Section -->
+    <section class="hero-gradient text-white py-16" id="home">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4" data-i18n="hero_title">Прием в Университет имени М. Козыбаева</h1>
+            <p class="text-xl mb-8 max-w-2xl mx-auto" data-i18n="hero_subtitle">Начните свой путь с американскими дипломными программами от University of Arizona</p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <!-- Вот эта кнопка: -->
+            <a href="#contact" class="bg-white text-primary-dark hover:bg-gray-100 px-6 py-3 rounded-lg font-bold text-center" data-i18n="apply_button">
+                Подать заявку
+            </a>
+            <a href="https://astra.ku.edu.kz/marketing-main?ln=ru" class="border-2 border-white hover:bg-white hover:text-primary-dark px-6 py-3 rounded-lg font-bold text-center" data-i18n="diploma_info">
+                Информация о дипломе
+            </a>
+        </div>
+    </div>
+</section>
+
+    <!-- IT BOOST Program -->
+    <section class="py-16 bg-gray-50" id="itboost">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4" data-i18n="itboost_title">Программа IT BOOST</h2>
+                    <p class="text-gray-600 mb-6" data-i18n="itboost_description">Получите американский диплом от University of Arizona, обучаясь в Университете Козыбаева в Петропавловске.</p>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary mt-1 mr-2"></i>
+                            <span data-i18n="itboost_feature1">Международно признанная степень</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary mt-1 mr-2"></i>
+                            <span data-i18n="itboost_feature2">Современная IT-программа</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary mt-1 mr-2"></i>
+                            <span data-i18n="itboost_feature3">Двойной сертификат</span>
+                        </li>
+                    </ul>
+                    <a href="https://astra.ku.edu.kz/arida-main" class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-medium inline-block" data-i18n="learn_more">
+                        Подробнее о программе
+                    </a>
+                </div>
+                <div class="md:w-1/2 bg-white p-8 rounded-lg shadow-md">
+                    <div class="bg-blue-100 p-6 rounded-lg text-center">
+                        <i class="fas fa-laptop-code text-primary-dark text-5xl mb-4"></i>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2" data-i18n="itboost_card_title">Программа IT BOOST</h3>
+                        <p class="text-gray-600 mb-4" data-i18n="itboost_card_subtitle">Совместная программа с University of Arizona</p>
+                        <div class="flex justify-center space-x-2">
+                            <span class="bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm">STEM</span>
+                            <span class="bg-green-200 text-green-800 px-3 py-1 rounded-full text-sm" data-i18n="international">Международная</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arizona Diploma Section -->
+    <section class="py-16 bg-white" id="arizona">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <div class="bg-gray-100 p-8 rounded-lg shadow-md">
+                        <div class="bg-white p-6 rounded-lg text-center">
+                            <i class="fas fa-certificate text-primary-dark text-5xl mb-4"></i>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2" data-i18n="arizona_card_title">Программа Arizona Diploma</h3>
+                            <p class="text-gray-600 mb-4" data-i18n="arizona_card_subtitle">Американская степень от University of Arizona</p>
+                            <div class="flex justify-center space-x-2">
+                                <span class="bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm" data-i18n="international">Международная</span>
+                                <span class="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm" data-i18n="accredited">Аккредитованная</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 md:pl-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4" data-i18n="arizona_title">Диплом University of Arizona</h2>
+                    <p class="text-gray-600 mb-6" data-i18n="arizona_description">Подробная информация о программе получения американского диплома в партнерстве с University of Arizona.</p>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary mt-1 mr-2"></i>
+                            <span data-i18n="arizona_feature1">Полностью аккредитованная американская степень</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary mt-1 mr-2"></i>
+                            <span data-i18n="arizona_feature2">Идентичная программа с США</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary mt-1 mr-2"></i>
+                            <span data-i18n="arizona_feature3">Глобальные карьерные возможности</span>
+                        </li>
+                    </ul>
+                    <a href="https://astra.ku.edu.kz/marketing-main?ln=ru" class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-medium inline-block" data-i18n="learn_more">
+                        Подробнее о программе
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- University News -->
+    <section class="py-16 bg-gray-50" id="admissions">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800" data-i18n="admissions_title">Информация о приеме</h2>
+                <a href="https://ku.edu.kz" class="text-primary hover:text-primary-dark font-medium" data-i18n="university_website">Сайт университета</a>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm news-card">
+                    <div class="bg-gray-200 h-48 flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-4xl text-gray-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-sm text-gray-500 mb-2" data-i18n="programs">Программы</div>
+                        <h3 class="text-xl font-semibold mb-3">Arizona Diploma</h3>
+                        <p class="text-gray-600 mb-4" data-i18n="arizona_card_info">Подробная информация о программе получения американского диплома.</p>
+                        <a href="https://astra.ku.edu.kz/marketing-main?ln=ru" class="text-primary hover:text-primary-dark font-medium" data-i18n="learn_more">Подробнее</a>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm news-card">
+                    <div class="bg-blue-100 h-48 flex items-center justify-center">
+                        <i class="fas fa-laptop-code text-4xl text-blue-700"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-sm text-gray-500 mb-2" data-i18n="technologies">Технологии</div>
+                        <h3 class="text-xl font-semibold mb-3">Программа IT BOOST</h3>
+                        <p class="text-gray-600 mb-4" data-i18n="itboost_card_info">Информация о нашей совместной IT-программе с University of Arizona.</p>
+                        <a href="https://astra.ku.edu.kz/arida-main" class="text-primary hover:text-primary-dark font-medium" data-i18n="details">Подробности</a>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm news-card">
+                    <div class="bg-green-100 h-48 flex items-center justify-center">
+                        <i class="fas fa-university text-4xl text-green-700"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-sm text-gray-500 mb-2" data-i18n="university">Университет</div>
+                        <h3 class="text-xl font-semibold mb-3" data-i18n="university_name_short">Университет им. Козыбаева</h3>
+                        <p class="text-gray-600 mb-4" data-i18n="university_info">Посетите наш основной сайт для получения полной информации.</p>
+                        <a href="https://ku.edu.kz" class="text-primary hover:text-primary-dark font-medium" data-i18n="go_to_website">Перейти на сайт</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-16 bg-white" id="contact">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto bg-gray-100 rounded-lg shadow-md overflow-hidden">
+                <div class="p-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6" data-i18n="admissions_office">Приемная комиссия</h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="bg-primary text-white p-3 rounded-lg mr-4">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-800 mb-1" data-i18n="address">Адрес</h3>
+                                    <p class="text-gray-600">ул. Пушкина 86, Петропавловск</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-primary text-white p-3 rounded-lg mr-4">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-800 mb-1">Email</h3>
+                                    <p class="text-gray-600">mail@ku.edu.kz</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-primary text-white p-3 rounded-lg mr-4">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-800 mb-1" data-i18n="phone">Телефон</h3>
+                                    <p class="text-gray-600">+7 (7152) 49-30-27</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="bg-primary text-white p-3 rounded-lg mr-4">
+                                    <i class="fab fa-telegram"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-800 mb-1" data-i18n="telegram_channel">Телеграм канал</h3>
+                                    <a href="https://t.me/kozybayevuniversity" target="_blank" class="text-primary hover:text-primary-dark">@kozybayevuniversity</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4" data-i18n="university_name_short">Университет им. Козыбаева</h3>
+                    <p class="mb-4" data-i18n="university_address">Северо-Казахстанский университет имени Манаша Козыбаева, расположенный по адресу ул. Пушкина 86, Петропавловск.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4" data-i18n="programs">Программы</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#arizona" class="text-gray-400 hover:text-white">Arizona Diploma</a></li>
+                        <li><a href="#itboost" class="text-gray-400 hover:text-white">IT BOOST Program</a></li>
+                        <li><a href="#admissions" class="text-gray-400 hover:text-white" data-i18n="admission_requirements">Требования к поступлению</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4" data-i18n="quick_links">Быстрые ссылки</h4>
+                    <ul class="space-y-2">
+                        <li><a href="https://ku.edu.kz" class="text-gray-400 hover:text-white" data-i18n="university_website">Сайт университета</a></li>
+                        <li><a href="https://astra.ku.edu.kz/marketing-main?ln=ru" class="text-gray-400 hover:text-white" data-i18n="diploma_info">Информация о дипломе</a></li>
+                        <li><a href="https://astra.ku.edu.kz/arida-main" class="text-gray-400 hover:text-white" data-i18n="itboost_details">Подробности IT BOOST</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4" data-i18n="contacts">Контакты</h4>
+                    <address class="not-italic">
+                        <p class="mb-2"><i class="fas fa-map-marker-alt mr-2"></i> ул. Пушкина 86</p>
+                        <p class="mb-2"><i class="fas fa-envelope mr-2"></i> mail@ku.edu.kz</p>
+                        <p class="mb-2"><i class="fas fa-phone mr-2"></i> +7 (7152) 49-30-27</p>
+                        <p><i class="fab fa-telegram mr-2"></i> <a href="https://t.me/kozybayevuniversity" target="_blank" class="text-gray-400 hover:text-white">@kozybayevuniversity</a></p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-6 text-center text-gray-400 text-sm">
+                <span data-i18n="copyright">© 2025 Приемная комиссия Университета им. Козыбаева. Все права защищены.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Translation data
+        const translations = {
+            ru: {
+                "home": "Главная",
+                "admissions": "Приемная комиссия",
+                "contacts": "Контакты",
+                "news_channel": "Новостной канал",
+                "university_website": "Сайт университета",
+                "university_name": "Северо-Казахстанский университет имени Манаша Козыбаева",
+                "language": "Русский",
+                "russian": "Русский",
+                "kazakh": "Қазақша",
+                "english": "English",
+                "hero_title": "Прием в Университет имени М. Козыбаева",
+                "hero_subtitle": "Начните свой путь с американскими дипломными программами от University of Arizona",
+                "apply_button": "Подать заявку",
+                "diploma_info": "Информация о дипломе",
+                "itboost_title": "Программа IT BOOST",
+                "itboost_description": "Получите американский диплом от University of Arizona, обучаясь в Университете Козыбаева в Петропавловске.",
+                "itboost_feature1": "Международно признанная степень",
+                "itboost_feature2": "Современная IT-программа",
+                "itboost_feature3": "Двойной сертификат",
+                "learn_more": "Подробнее о программе",
+                "itboost_card_title": "Программа IT BOOST",
+                "itboost_card_subtitle": "Совместная программа с University of Arizona",
+                "international": "Международная",
+                "arizona_title": "Диплом University of Arizona",
+                "arizona_description": "Подробная информация о программе получения американского диплома в партнерстве с University of Arizona.",
+                "arizona_feature1": "Полностью аккредитованная американская степень",
+                "arizona_feature2": "Идентичная программа с США",
+                "arizona_feature3": "Глобальные карьерные возможности",
+                "arizona_card_title": "Программа Arizona Diploma",
+                "arizona_card_subtitle": "Американская степень от University of Arizona",
+                "accredited": "Аккредитованная",
+                "admissions_title": "Информация о приеме",
+                "programs": "Программы",
+                "arizona_card_info": "Подробная информация о программе получения американского диплома.",
+                "technologies": "Технологии",
+                "itboost_card_info": "Информация о нашей совместной IT-программе с University of Arizona.",
+                "details": "Подробности",
+                "university": "Университет",
+                "university_name_short": "Университет им. Козыбаева",
+                "university_info": "Посетите наш основной сайт для получения полной информации.",
+                "go_to_website": "Перейти на сайт",
+                "admissions_office": "Приемная комиссия",
+                "address": "Адрес",
+                "phone": "Телефон",
+                "telegram_channel": "Телеграм канал",
+                "university_address": "Северо-Казахстанский университет имени Манаша Козыбаева, расположенный по адресу ул. Пушкина 86, Петропавловск.",
+                "admission_requirements": "Требования к поступлению",
+                "quick_links": "Быстрые ссылки",
+                "itboost_details": "Подробности IT BOOST",
+                "copyright": "© 2025 Приемная комиссия Университета им. Козыбаева. Все права защищены."
+            },
+            kz: {
+                "home": "Басты",
+                "admissions": "Қабылдау комиссиясы",
+                "contacts": "Байланыстар",
+                "news_channel": "Жаңалықтар арнасы",
+                "university_website": "Университеттің сайты",
+                "university_name": "Манаш Қозыбаев атындағы Солтүстік Қазақстан университеті",
+                "language": "Қазақша",
+                "russian": "Орысша",
+                "kazakh": "Қазақша",
+                "english": "Ағылшынша",
+                "hero_title": "М. Қозыбаев атындағы Университетке қабылдау",
+                "hero_subtitle": "Arizona университетінің американдық дипломдық бағдарламаларымен жолыңызды бастаңыз",
+                "apply_button": "Өтініш беру",
+                "diploma_info": "Диплом туралы ақпарат",
+                "itboost_title": "IT BOOST бағдарламасы",
+                "itboost_description": "Петропавлдағы Қозыбаев университетінде оқып, Arizona университетінен американдық диплом алыңыз.",
+                "itboost_feature1": "Халықаралық деңгейде танылған дәреже",
+                "itboost_feature2": "Заманауи IT-бағдарлама",
+                "itboost_feature3": "Қос сертификат",
+                "learn_more": "Бағдарлама туралы толығырақ",
+                "itboost_card_title": "IT BOOST бағдарламасы",
+                "itboost_card_subtitle": "Arizona университетімен бірлескен бағдарлама",
+                "international": "Халықаралық",
+                "arizona_title": "Arizona университетінің дипломы",
+                "arizona_description": "Arizona университетімен ынтымақтастықта американдық диплом алу бағдарламасы туралы толық ақпарат.",
+                "arizona_feature1": "Толық аккредиттелген американдық дәреже",
+                "arizona_feature2": "АҚШ-тағымен бірдей бағдарлама",
+                "arizona_feature3": "Ғаламдық мансаптық мүмкіндіктер",
+                "arizona_card_title": "Arizona Diploma бағдарламасы",
+                "arizona_card_subtitle": "Arizona университетінен американдық дәреже",
+                "accredited": "Аккредиттелген",
+                "admissions_title": "Қабылдау туралы ақпарат",
+                "programs": "Бағдарламалар",
+                "arizona_card_info": "Американдық диплом алу бағдарламасы туралы толық ақпарат.",
+                "technologies": "Технологиялар",
+                "itboost_card_info": "Arizona университетімен бірлескен IT-бағдарламамыз туралы ақпарат.",
+                "details": "Толығырақ",
+                "university": "Университет",
+                "university_name_short": "Қозыбаев атындағы Университет",
+                "university_info": "Толық ақпарат алу үшін университеттің негізгі сайтына кіріңіз.",
+                "go_to_website": "Сайтқа өту",
+                "admissions_office": "Қабылдау комиссиясы",
+                "address": "Мекен-жай",
+                "phone": "Телефон",
+                "telegram_channel": "Телеграм арнасы",
+                "university_address": "Манаш Қозыбаев атындағы Солтүстік Қазақстан университеті, Пушкин көшесі 86, Петропавл.",
+                "admission_requirements": "Қабылдау талаптары",
+                "quick_links": "Жылдам сілтемелер",
+                "itboost_details": "IT BOOST туралы толығырақ",
+                "copyright": "© 2025 Қозыбаев атындағы Университеттің қабылдау комиссиясы. Барлық құқықтар қорғалған."
+            },
+            en: {
+                "home": "Home",
+                "admissions": "Admissions",
+                "contacts": "Contacts",
+                "news_channel": "News Channel",
+                "university_website": "University Website",
+                "university_name": "M. Kozybayev North Kazakhstan University",
+                "language": "English",
+                "russian": "Russian",
+                "kazakh": "Kazakh",
+                "english": "English",
+                "hero_title": "Admission to Kozybayev University",
+                "hero_subtitle": "Start your journey with American diploma programs from the University of Arizona",
+                "apply_button": "Apply Now",
+                "diploma_info": "Diploma Information",
+                "itboost_title": "IT BOOST Program",
+                "itboost_description": "Earn an American diploma from the University of Arizona while studying at Kozybayev University in Petropavlovsk.",
+                "itboost_feature1": "Internationally recognized degree",
+                "itboost_feature2": "Modern IT program",
+                "itboost_feature3": "Dual certification",
+                "learn_more": "Learn More",
+                "itboost_card_title": "IT BOOST Program",
+                "itboost_card_subtitle": "Joint program with University of Arizona",
+                "international": "International",
+                "arizona_title": "University of Arizona Diploma",
+                "arizona_description": "Detailed information about the program for obtaining an American diploma in partnership with the University of Arizona.",
+                "arizona_feature1": "Fully accredited American degree",
+                "arizona_feature2": "Identical program with the US",
+                "arizona_feature3": "Global career opportunities",
+                "arizona_card_title": "Arizona Diploma Program",
+                "arizona_card_subtitle": "American degree from University of Arizona",
+                "accredited": "Accredited",
+                "admissions_title": "Admission Information",
+                "programs": "Programs",
+                "arizona_card_info": "Detailed information about the program for obtaining an American diploma.",
+                "technologies": "Technologies",
+                "itboost_card_info": "Information about our joint IT program with the University of Arizona.",
+                "details": "Details",
+                "university": "University",
+                "university_name_short": "Kozybayev University",
+                "university_info": "Visit our main website for complete information.",
+                "go_to_website": "Go to Website",
+                "admissions_office": "Admissions Office",
+                "address": "Address",
+                "phone": "Phone",
+                "telegram_channel": "Telegram Channel",
+                "university_address": "M. Kozybayev North Kazakhstan University, located at Pushkin Street 86, Petropavlovsk.",
+                "admission_requirements": "Admission Requirements",
+                "quick_links": "Quick Links",
+                "itboost_details": "IT BOOST Details",
+                "copyright": "© 2025 Kozybayev University Admissions Committee. All rights reserved."
+            }
+        };
+
+        // Current language
+        let currentLanguage = 'ru';
+
+        // Function to change language
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update current language button
+            const currentLangButton = document.getElementById('currentLanguage');
+            if (lang === 'ru') {
+                currentLangButton.innerHTML = '<img src="https://flagcdn.com/w20/ru.png" class="language-flag" alt="Russian"> Русский <i class="fas fa-chevron-down ml-1 text-xs"></i>';
+            } else if (lang === 'kz') {
+                currentLangButton.innerHTML = '<img src="https://flagcdn.com/w20/kz.png" class="language-flag" alt="Kazakh"> Қазақша <i class="fas fa-chevron-down ml-1 text-xs"></i>';
+            } else if (lang === 'en') {
+                currentLangButton.innerHTML = '<img src="https://flagcdn.com/w20/gb.png" class="language-flag" alt="English"> English <i class="fas fa-chevron-down ml-1 text-xs"></i>';
+            }
+            
+            // Close mobile language menu if open
+            const mobileLanguageMenu = document.getElementById('mobileLanguageMenu');
+            if (mobileLanguageMenu) {
+                mobileLanguageMenu.classList.add('hidden');
+            }
+        }
+
+        // Toggle mobile language menu
+        function toggleMobileLanguage() {
+            const mobileLanguageMenu = document.getElementById('mobileLanguageMenu');
+            if (mobileLanguageMenu) {
+                mobileLanguageMenu.classList.toggle('hidden');
+            }
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuButton').addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobileMenu');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    </script>
+</html>
